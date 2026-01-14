@@ -36,16 +36,21 @@ app.post("/chat", async (req, res) => {
 
     console.log("✅ AI response:", aiText.substring(0, 100));
     res.json({ answer: aiText });
-  } catch (error) {
-    console.error("🔥 Gemini error:", error.message);
-    console.error("Full error:", error);
-    res.status(500).json({ 
-      error: "AI error",
-      details: error.message 
-    });
-  }
+  }catch (error) {
+  console.error("🔥 Gemini error:", error.message);
+  console.error("Full error:", error);
+
+  res.status(500).json({
+    error: "AI error",
+    details: error.message
+  });
+}
+
 });
 
-app.listen(3000, () => {
-  console.log("✅ AI backend running on http://localhost:3000");
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+  console.log(`✅ AI backend running on port ${PORT}`);
 });
+
