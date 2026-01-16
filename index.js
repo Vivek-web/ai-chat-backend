@@ -16,6 +16,15 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// Health check endpoint
+app.get("/", (req, res) => {
+  res.json({ status: "ok", message: "AI Backend is running" });
+});
+
+app.get("/health", (req, res) => {
+  res.json({ status: "ok", hasApiKey: !!process.env.GEMINI_API_KEY });
+});
+
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
 // app.get("/test-models", async (req, res) => {
