@@ -5,6 +5,11 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 
 dotenv.config();
 
+if (!process.env.GEMINI_API_KEY) {
+  console.error("❌ GEMINI_API_KEY missing");
+  process.exit(1);
+}
+
 const app = express();
 app.use(cors());
 app.use(express.json());
