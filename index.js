@@ -3,12 +3,19 @@ import cors from "cors";
 import dotenv from "dotenv";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import axios from "axios";
+
 console.log("🚀 Server starting...");
+console.log("Node version:", process.version);
+console.log("Environment:", process.env.NODE_ENV || "development");
 
 dotenv.config();
 
+console.log("✅ Environment loaded");
+
 if (!process.env.GEMINI_API_KEY) {
-  console.warn("⚠️ GEMINI_API_KEY missing");
+  console.warn("⚠️ GEMINI_API_KEY missing - API calls will fail");
+} else {
+  console.log("✅ GEMINI_API_KEY found");
 }
 
 
@@ -69,7 +76,22 @@ app.post("/chat", async (req, res) => {
 
 const PORT = process.env.PORT || 3000;
 
-app.listen(PORT, () => {
+app.listen(PORT, "0.0.0.0", () => {
   console.log(`✅ AI backend running on port ${PORT}`);
+  console.log(`🌐 Server ready to accept connections`);
+}).on('error', (err) => {
+  console.error("❌ Server failed to start:", err);
+  process.exit(1);
+});
+
+// Handle uncaught errors
+process.on('uncaughtException', (err) => {
+  console.error("❌ Uncaught Exception:", err);
+  process.exit(1);
+});
+
+process.on('unhandledRejection', (err) => {
+  console.error("❌ Unhandled Rejection:", err);
+  process.exit(1);
 });
 
