@@ -38,7 +38,7 @@ app.post("/chat", async (req, res) => {
 
     console.log("📩 Received message:", userMessage);
 
-    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
     const result = await model.generateContent(userMessage);
     const response = await result.response;
     const aiText = response.text();
